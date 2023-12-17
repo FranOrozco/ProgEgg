@@ -11,7 +11,7 @@ public class Cadena {
     public Cadena() {
         leer = new Scanner(System.in);
     }
-    
+
     public Cadena(String frase, int longitud) {
         this.frase = frase;
         this.longitud = longitud;
@@ -104,7 +104,28 @@ public class Cadena {
         System.out.println("Ingrese la frase que quiere unir a la primera: ");
         String segundaFrase = leer.nextLine();
         String fraseConcatenada = this.getFrase().concat(segundaFrase);
-        
+
         System.out.println("La frase concatenada quedaría así: " + fraseConcatenada);
+    }
+
+    public void reemplazar(String letra) {
+        for (int i = 0; i < this.getFrase().length(); i++) {
+            if (this.getFrase().substring(i, i + 1).equalsIgnoreCase("a")) {
+                this.setFrase(this.getFrase().replace("a", letra));
+            }
+        }
+    }
+
+    public boolean contiene(String letra) {
+        boolean resp = false;
+        for (int i = 0; i < this.getFrase().length(); i++) {
+            if (this.getFrase().substring(i, i + 1).equalsIgnoreCase(letra)) {
+                resp = true;
+                break;
+            } else {
+                resp = false;
+            }
+        }
+        return resp;
     }
 }
