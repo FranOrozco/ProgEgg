@@ -6,54 +6,57 @@ import java.util.Scanner;
 
 public class ServicioAlumno {
 
-    Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+    private Scanner leer;
+    private ArrayList<Alumno> nuevaLista;
 
-    public Alumno crearAlumno() {
-        Alumno alumno = new Alumno();
+    public ServicioAlumno() { // Esta es una muy buena práctica. 
+        this.nuevaLista = new ArrayList<>(); // Creo el espacio en memoria de la LISTA
+        this.leer = new Scanner(System.in).useDelimiter("\n"); // Cuando se invoca la clase, habilita el flujo de datos. 
+    }
+
+    public void cargarAlumnos() { // Metodo para que el usuario cargue los datos de manera manual
         System.out.println("Ingrese el nombre del alumno: ");
-        alumno.setNombre(scanner.next());
+        String nombre = leer.next();
 
-        // CARGO LAS NOTAS EN UNA LISTA AUXILIAR
-        ArrayList<Integer> notasAux = new ArrayList();
+        ArrayList<Integer> notas = new ArrayList<>();
+
         System.out.println("Ingrese la primer nota: ");
-        notasAux.add(scanner.nextInt());
+        Integer nota1 = leer.nextInt();
+        notas.add(nota1);
 
         System.out.println("Ingrese la segunda nota: ");
-        notasAux.add(scanner.nextInt());
+        Integer nota2 = leer.nextInt();
+        notas.add(nota2);
 
         System.out.println("Ingrese la tercer nota: ");
-        notasAux.add(scanner.nextInt());
-        // CARGO LAS NOTAS CON UN SET
-        alumno.setNotas(notasAux);
+        Integer nota3 = leer.nextInt();
+        notas.add(nota3);
 
-        return alumno;
+        nuevaLista.add(new Alumno(nombre, notas));
     }
 
-    public ArrayList<Alumno> listaAlumnos() {
-        ArrayList<Alumno> alumnos = new ArrayList();
-        Alumno alumno = new Alumno();
-        String respuesta = "";
-        do {
-            alumno = crearAlumno();
-            alumnos.add(alumno);
-            System.out.println("¿Quiere crear otro alumno? s/n");
-            respuesta = scanner.next();
-        } while ("s".equalsIgnoreCase(respuesta));
-        return alumnos;
-    }
-
-    public Integer calcularPromedio(ArrayList<Integer> notas) {
-        Integer suma = 0;
-        for (Integer nota : notas) {
-            suma += nota;
+    public void mostrarAlumnos() {
+        for (Alumno alumno : nuevaLista) { // Atajo para el for-each es escribiendo fore + TAB. 
+            System.out.println(alumno.toString());
         }
-        return notas.isEmpty() ? 0 : suma / notas.size();
     }
 
-    public void notaFinal(ArrayList<Alumno> alumno) {
-        System.out.println("Ingrese el nombre del alumno que quiere buscar sus notas: ");
-        String respuesta = scanner.next();
+    public void notaFinal() {
+        System.out.println("Ingrese el nombre del alumno que quiere calcular su nota final: ");
+        String resp = leer.next();
+        Integer sumatoria = 0;
 
+        for (Alumno alumno : nuevaLista) { // Recorro la lista de alumnos 
+            if (alumno.getNombre().equalsIgnoreCase(resp)) { // Si encuentro el nombre buscado, ingreso al if
+                for (Integer nota : alumno.getNotas()) { // Recorro las notas del alumno y las sumo en una sumatoria
+                    sumatoria = sumatoria + nota;
+                }
+                System.out.println("El promedio del alumno es de: " + sumatoria / 3); // Escribo directamente el resultado del promedio. 
+                break;
+            } else {
+                System.out.println("No hay ningún alumno con ese nombre. "); // Si no se entra en el IF, se publica directamente que no existe tal alumno. 
+            }
+        }
     }
 
 }
