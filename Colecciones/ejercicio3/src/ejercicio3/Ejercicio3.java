@@ -1,7 +1,7 @@
 package ejercicio3;
 
 import java.util.Scanner;
-import servicios.ServicioAlumno;
+import ejercicio3.servicios.ServicioAlumno;
 
 public class Ejercicio3 {
 
